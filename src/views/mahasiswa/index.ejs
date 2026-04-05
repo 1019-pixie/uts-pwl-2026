@@ -1,0 +1,63 @@
+<% if (success) { %>
+  <div class="bg-green-100 text-green-700 p-3 rounded mb-4"><%= success %></div>
+<% } %>
+<% if (error) { %>
+  <div class="bg-red-100 text-red-700 p-3 rounded mb-4"><%= error %></div>
+<% } %>
+
+<div class="bg-white p-6 rounded-2xl shadow">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">Data Mahasiswa</h2>
+    <a href="/mahasiswa/create" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      + Tambah
+    </a>
+  </div>
+  <table class="w-full border-collapse">
+    <thead class="bg-blue-600 text-white">
+      <tr>
+        <th class="p-3 text-left">No</th>
+        <th class="p-3 text-left">Nama</th>
+        <th class="p-3 text-left">NIM</th>
+        <th class="p-3 text-left">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% mahasiswa.forEach((m, i) => { %>
+      <tr class="border-b hover:bg-gray-50">
+        <td class="p-3"><%= i + 1 %></td>
+        <td class="p-3"><%= m.nama %></td>
+        <td class="p-3"><%= m.nim %></td>
+        <td class="p-3">
+          <div class="flex gap-2">
+            <a href="/mahasiswa/edit/<%= m.id %>" class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">
+              Edit
+            </a>
+            <a href="#" onclick="hapus('<%= m.id %>')" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+              Hapus
+            </a>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+function hapus(id) {
+  Swal.fire({
+    title: 'Yakin?',
+    text: 'Data akan dihapus permanen!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#ef4444',
+    cancelButtonColor: '#6b7280',
+    confirmButtonText: 'Ya, hapus!',
+    cancelButtonText: 'Cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = '/mahasiswa/delete/' + id;
+    }
+  });
+}
+</script>
